@@ -1,0 +1,42 @@
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  function loadGames() {
+    axios.get('http://localhost:3200/games')
+      .then(response => {
+        document.getElementById('my-games').innerHTML = response.data;
+      })
+  }
+
+  function loadStats() {
+    axios.get('http://localhost:3200/games/stats')
+      .then(response => {
+        document.getElementById('my-stats').innerHTML = JSON.stringify(response.data, null, 2);
+      })
+  }
+
+  function addGame() {
+    const value = document.getElementById('input-game').value;
+    axios.post('http://localhost:3200/games', {
+      game: value
+    })
+      .then(response => {
+        document.getElementById('my-games').innerHTML = response.data;
+      })
+  }
+
+
+</script>
+
+<button onclick="loadGames()">Load games</button>
+<button onclick="loadStats()">Load stats</button>
+
+<button onclick="addGame()">Add game</button>
+<input id="input-game" />
+
+<div>My games</div>
+<div id="my-games">
+  No games yet
+</div>
+<div id="my-stats">
+  The stats
+</div>
